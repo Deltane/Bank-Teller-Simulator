@@ -7,10 +7,10 @@
 
 void* customer(void* arg) {
 	/* Thread routine to add customers to queue */
-	Parameters* params = (Parameters*) arg;
-	Queue* queue = params->queue;
+	Parameters* parameters = (Parameters*) arg;
+	Queue* queue = parameters->queue;
 	customer_t* customer = NULL;
-	int push_sucess = FALSE;
+	int push_customer = FALSE;
 	const char* linebreak = "-----------------------------------------------------------------------\n";
 	time_t ltime;
 
@@ -26,20 +26,20 @@ void* customer(void* arg) {
 			fscanf(file, "%i %c ", &customer->n, &customer->type);
 
 			/* Sleep for specified time interval */
-			sleep(params->tc);
+			sleep(parameters->tc);
 
 			/* Push customer to Queue */
-			push_sucess = FALSE;
+			push_customer = FALSE;
 			pthread_mutex_lock(&queue->lock);
-			while (!push_sucess) {
-				if (queue->list->length < params->m) { /* Check Queue has room for one more */
+			while (!push_customer) {
+				if (queue->list->length < parameters->m) { /* Check Queue has room for one more */
 					insertStart(queue->list, customer);
 					ltime = time(NULL);
 					localtime_r(&ltime, &customer->arrival);
-					push_sucess = TRUE;
+					push_customer = TRUE;
 
 					/* Print arrival time string to logfile */
-					LOG(params->logfile, "%s%i: %c\nArrival time: %02d:%02d:%02d\n%s",
+					LOG(parameters->logfile, "%s%i: %c\nArrival time: %02d:%02d:%02d\n%s",
 						linebreak,
 						customer->n, customer->type,
 						customer->arrival.tm_hour, customer->arrival.tm_min, customer->arrival.tm_sec,
