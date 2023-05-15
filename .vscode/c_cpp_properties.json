@@ -1,6 +1,6 @@
 {
     "configurations": [
-        {
+        /*{
             "name": "Mac",
             "includePath": [
                 "${workspaceFolder}/**"
@@ -14,7 +14,7 @@
             "cppStandard": "c++17",
             "intelliSenseMode": "macos-clang-x64",
             "configurationProvider": "ms-vscode.makefile-tools"
-        },
+        },*/
         {
             "name": "Linux",
             "includePath": [
