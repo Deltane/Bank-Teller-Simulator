@@ -2,7 +2,7 @@ Operating Systems BankTellerSimulator Report
 Serena McPherson 19765644	
 
 How to install via GitHub:
-git clone https://github.com/Deltane/Bank-Teller-Simulator 
+git clone https://github.com/Deltane/Bank-Teller-Simulator
 cd BankTellerSimulator
 make
 

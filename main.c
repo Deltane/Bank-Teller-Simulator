@@ -18,7 +18,7 @@ TellerTotals* totals = initTellerTotals(); // create struct to keep track of tel
 LogFile* logfile = openLogFile("r_log"); // open log file to store messages
 
 /* Get parameters */
-Parameters params = {
+Parameters parameters = {
 	.m = atoi(argv[1]), // max number of customers in the queue
 	.tc = atoi(argv[2]), // time for a customer to be served by a teller
 	.tw = atoi(argv[3]), // time for a teller to rest after serving a customer
@@ -35,9 +35,9 @@ int i;
 
 /* Create threads */
 printf("Starting threads...\n");
-pthread_create(&customer_th, NULL, &customer, &params); // create thread for customer
+pthread_create(&customer_th, NULL, &customer, &parameters); // create thread for customer
 for (i=0; i<4; i++) { // create threads for each teller
-	pthread_create(&teller_th[i], NULL, &teller, &params);
+	pthread_create(&teller_th[i], NULL, &teller, &parameters);
 }
 
 /* Join threads */
@@ -49,7 +49,7 @@ printf("Threads joined...\n");
 
 /* Free memory */
 freeQueue(c_queue, &free); // deallocate memory used by the queue of customers
-freeTellerTotals(params.totals); // deallocate memory used by the teller-totals struct
-closeLogFile(params.logfile); // close the log file
+freeTellerTotals(parameters.totals); // deallocate memory used by the teller-totals struct
+closeLogFile(parameters.logfile); // close the log file
 return 0;
 }
