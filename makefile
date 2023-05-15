@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -ansi -pedantic -g
+CFLAGS = -Wall -Werror -pedantic -g
 EXEC = banksimulator
 OBJ = main.o LinkedList.o Customer.o Queue.o Teller.o Parameters.o
 
@@ -7,7 +7,7 @@ $(EXEC): $(OBJ)
 	$(CC) $(OBJ) -pthread -o $(EXEC)
 
 main.o: main.c linkedlist.h customer.h queue.h teller.h parameters.h
-	$(CC) $(CFLAGS) -pthread -c main.c -c
+	$(CC) $(CFLAGS) -pthread -c main.c
 
 Customer.o: Customer.c customer.h macros.h queue.h parameters.h
 	$(CC) $(CFLAGS) -pthread -c Customer.c

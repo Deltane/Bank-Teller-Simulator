@@ -5,7 +5,7 @@
 #include "parameters.h"
 #include "customer.h"
 
-void* Customer(void* arg) {
+void* customer(void* arg) {
 	/* Thread routine to add customers to queue */
 	Parameters* params = (Parameters*) arg;
 	Queue* queue = params->queue;
@@ -22,7 +22,7 @@ void* Customer(void* arg) {
 	} else {
 		while(!feof(file)) {
 			/* For every line in the file, read into a Customer struct */
-			customer = create_Customer();
+			customer = create_customer();
 			fscanf(file, "%i %c ", &customer->n, &customer->type);
 
 			/* Sleep for specified time interval */
@@ -67,7 +67,7 @@ void* Customer(void* arg) {
 	return NULL;
 }
 
-customer_t* create_Customer() {
+customer_t* create_customer() {
 	/* Constructor function */
 	customer_t* customer = (customer_t*) malloc(sizeof(customer_t));
 	

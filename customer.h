@@ -13,8 +13,8 @@ typedef struct {
 } customer_t;
 
 /* Customer methods */
-customer_t* create_Customer();
-void print_Customer(void* Customer);
+customer_t* create_customer();
+void print_Customer(void* customer);
 
 /* Thread function */
 void* customer(void* queue);

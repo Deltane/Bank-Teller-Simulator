@@ -13,42 +13,43 @@ int main (int argc, char** argv)
 	}
 
 	/* Create a queue, a teller-totals struct, a logfile */
-	Queue* c_queue = createQueue();
-	TellerTotals* totals = initTellerTotals();
-	LogFile* logfile = openLogFile("r_log");
-	/* Get parameters */
-	Parameters params = {
-		.m = atoi(argv[1]), 
-		.tc = atoi(argv[2]),
-		.tw = atoi(argv[3]),
-		.td = atoi(argv[4]),
-		.ti = atoi(argv[5]),
-		.queue = c_queue, 
-		.totals = totals,
-		.logfile = logfile
-	};
+Queue* c_queue = createQueue(); // create queue for customers
+TellerTotals* totals = initTellerTotals(); // create struct to keep track of tellers and their statistics
+LogFile* logfile = openLogFile("r_log"); // open log file to store messages
 
-	pthread_t Customer_th;
-	pthread_t teller_th[4];
-	int i;
+/* Get parameters */
+Parameters params = {
+	.m = atoi(argv[1]), // max number of customers in the queue
+	.tc = atoi(argv[2]), // time for a customer to be served by a teller
+	.tw = atoi(argv[3]), // time for a teller to rest after serving a customer
+	.td = atoi(argv[4]), // duration of a transaction between a customer and a teller
+	.ti = atoi(argv[5]), // interval at which customers arrive
+	.queue = c_queue, // pointer to the queue of customers
+	.totals = totals, // pointer to the teller-totals struct
+	.logfile = logfile // pointer to the log file
+};
 
-	/* Create threads */
-	printf("Starting threads...\n");
-	pthread_create(&Customer_th, NULL, &customer, &params);
-	for (i=0; i<4; i++) {
-		pthread_create(&teller_th[i], NULL, &Teller, &params);
-	}
-	
-	/* Join threads */
-	pthread_join(Customer_th, NULL);
-	for (i=0; i<4; i++) {
-		pthread_join(teller_th[i], NULL);
-	}
-	printf("Threads joined...\n");
+pthread_t customer_th; // thread for customer
+pthread_t teller_th[4]; // array of threads for tellers, with 4 tellers in total
+int i;
 
-	/* Free memory */
-	freeQueue(c_queue, &free);
-	freeTellerTotals(params.totals);
-	closeLogFile(params.logfile);
-	return 0;
+/* Create threads */
+printf("Starting threads...\n");
+pthread_create(&customer_th, NULL, &customer, &params); // create thread for customer
+for (i=0; i<4; i++) { // create threads for each teller
+	pthread_create(&teller_th[i], NULL, &teller, &params);
+}
+
+/* Join threads */
+pthread_join(customer_th, NULL); // wait for customer thread to finish
+for (i=0; i<4; i++) { // wait for each teller thread to finish
+	pthread_join(teller_th[i], NULL);
+}
+printf("Threads joined...\n");
+
+/* Free memory */
+freeQueue(c_queue, &free); // deallocate memory used by the queue of customers
+freeTellerTotals(params.totals); // deallocate memory used by the teller-totals struct
+closeLogFile(params.logfile); // close the log file
+return 0;
 }

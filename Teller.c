@@ -8,7 +8,7 @@
 #include "teller.h"
 #include "customer.h"
 
-void* Teller(void* arg) {
+void* teller(void* arg) {
     /* Thread routine to serve customers in the queue */
     Parameters* params = (Parameters*) arg;
     Queue* queue = params->queue;
