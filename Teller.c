@@ -1,3 +1,10 @@
+/*
+Serena McPherson
+19765644
+Operating Systems Assignment
+10/05/2023
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>

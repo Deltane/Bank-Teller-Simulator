@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -Wall -Werror -pedantic -g
-EXEC = banksimulator
+EXEC = cq
 OBJ = main.o LinkedList.o Customer.o Queue.o Teller.o Parameters.o
 
 $(EXEC): $(OBJ)
