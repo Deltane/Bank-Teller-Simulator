@@ -6,8 +6,12 @@ git clone https://github.com/Deltane/Bank-Teller-Simulator
 cd BankTellerSimulator
 make
 
+# How to compile and run directly from folder
+cd BankTellerSimulator
+make
+
 # Usage:
-* ./banksimulator queue_length customer_interval withdrawal_duration deposit_duration information_duration
+* ./cq queue_length customer_interval withdrawal_duration deposit_duration information_duration
 * Enter five command line arguments in the form of positive integers where the above represent their values. 
 * For example:./cq 8 3 6 2 5
 
